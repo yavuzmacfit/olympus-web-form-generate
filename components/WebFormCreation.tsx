@@ -1,6 +1,6 @@
 
 import React, { useState, useMemo } from 'react';
-import { LayoutPanelLeft, Plus, Save, ArrowLeft, Image as ImageIcon, Type, Trash2, Upload, CheckCircle2, Activity, Globe, Hash, QrCode, Smartphone, Link as LinkIcon, FileText, Info, MapPin, Building2, ChevronDown, X, Settings2, Layout, SlidersHorizontal } from 'lucide-react';
+import { LayoutPanelLeft, Plus, Save, ArrowLeft, Image as ImageIcon, Type, Trash2, Upload, CheckCircle2, Activity, Globe, Hash, QrCode, Smartphone, Link as LinkIcon, FileText, Info, MapPin, Building2, ChevronDown, X, Settings2, Layout, SlidersHorizontal, FileEdit } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 // Mock DB - Şehir ve kulüp ilişkisi
@@ -99,10 +99,16 @@ const WebFormCreation: React.FC = () => {
             <p className="text-gray-400 text-sm mt-0.5">Dinamik kampanya ve form yapılandırması.</p>
           </div>
         </div>
-        <button className="flex items-center gap-2 px-8 py-3 bg-blue-600 text-white rounded-2xl text-sm font-bold hover:bg-blue-700 transition-all shadow-xl shadow-blue-200">
-          <Save size={18} />
-          YAYINLA
-        </button>
+        <div className="flex items-center gap-3">
+          <button className="flex items-center gap-2 px-6 py-3 bg-white border border-blue-200 text-blue-600 rounded-2xl text-sm font-bold hover:bg-blue-50 transition-all">
+            <FileEdit size={18} />
+            TASLAK OLARAK KAYDET
+          </button>
+          <button className="flex items-center gap-2 px-8 py-3 bg-blue-600 text-white rounded-2xl text-sm font-bold hover:bg-blue-700 transition-all shadow-xl shadow-blue-200">
+            <Save size={18} />
+            YAYINLA
+          </button>
+        </div>
       </div>
 
       <div className="space-y-12">
