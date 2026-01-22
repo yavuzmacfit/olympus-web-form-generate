@@ -1,7 +1,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { LayoutPanelLeft, Plus, Save, ArrowLeft, Image as ImageIcon, Type, Trash2, Upload, CheckCircle2, Activity, Globe, Hash, QrCode, Smartphone, Link as LinkIcon, FileText, Info, MapPin, Building2, ChevronDown, X, Settings2, Layout, SlidersHorizontal } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Mock DB - Şehir ve kulüp ilişkisi
 const CITY_DATA: Record<string, string[]> = {
@@ -13,6 +13,7 @@ const CITY_DATA: Record<string, string[]> = {
 };
 
 const WebFormCreation: React.FC = () => {
+  const navigate = useNavigate();
   // --- 1. SAYFA STATE ---
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
   const [bgUrl, setBgUrl] = useState<string | null>(null);
@@ -87,9 +88,12 @@ const WebFormCreation: React.FC = () => {
       {/* ÜST HEADER */}
       <div className="mb-10 flex items-center justify-between">
         <div className="flex items-center gap-5">
-          <Link to="/" className="p-3 hover:bg-white hover:shadow-md rounded-2xl transition-all text-gray-400 bg-gray-100/50">
+          <button 
+            onClick={() => navigate('/web-formlar')}
+            className="p-3 hover:bg-white hover:shadow-md rounded-2xl transition-all text-gray-400 bg-gray-100/50"
+          >
             <ArrowLeft size={20} />
-          </Link>
+          </button>
           <div>
             <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Web Form Generate</h1>
             <p className="text-gray-400 text-sm mt-0.5">Dinamik kampanya ve form yapılandırması.</p>
@@ -296,14 +300,18 @@ const WebFormCreation: React.FC = () => {
                 </div>
               </div>
 
+              {/* AKSİYON BUTON METNİ */}
               <div className="space-y-4 pt-4">
-                <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest px-1">AKSİYON BUTON METNİ</label>
-                <div className="bg-[#fff1f1] border border-[#ffeded] rounded-[2.5rem] p-8">
+                <div className="flex justify-between items-center px-1">
+                  <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest">AKSİYON BUTON METNİ</label>
+                  <span className="text-[10px] font-bold text-gray-300">{buttonText.length}/30</span>
+                </div>
+                <div className="bg-[#fff1f1] border border-[#ffeded] rounded-[1.5rem] p-4 max-w-2xl">
                   <input 
                     type="text" 
                     value={buttonText} 
                     onChange={(e) => setButtonText(e.target.value)} 
-                    className="w-full bg-transparent border-none text-xl font-black text-red-700 tracking-wider text-center outline-none placeholder:text-red-200"
+                    className="w-full bg-transparent border-none text-base font-black text-red-700 tracking-wider text-center outline-none placeholder:text-red-200"
                   />
                 </div>
               </div>

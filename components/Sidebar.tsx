@@ -38,7 +38,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
       label: 'Kampanya İşlemleri', 
       icon: <Megaphone size={20} />, 
       children: [
-        { label: 'Web Form Oluşturma', path: '/web-form-olusturma' },
+        { label: 'Web Formlar', path: '/web-formlar' },
         { label: 'Ek İndirim Tanımlamaları', path: '#' },
         { label: 'Promosyon Kodu Oluşturma', path: '#' },
         { label: 'Promosyon Kodu Listeleme - Sorgulama', path: '#' },
@@ -86,7 +86,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
               <button
                 onClick={() => toggleMenu(item.id)}
                 className={`w-full flex items-center justify-between p-3 rounded-lg transition-colors group ${
-                  item.id === 'kampanya' || (item.children && item.children.some(c => typeof c !== 'string' && c.path === location.pathname)) ? 'text-blue-500' : 'text-gray-600 hover:bg-gray-50'
+                  item.id === 'kampanya' || (item.children && item.children.some(c => typeof c !== 'string' && (c.path === location.pathname || location.pathname.startsWith(c.path)))) ? 'text-blue-500' : 'text-gray-600 hover:bg-gray-50'
                 }`}
               >
                 <div className="flex items-center gap-3">
@@ -105,7 +105,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
                 {item.children.map((child, idx) => {
                   const label = typeof child === 'string' ? child : child.label;
                   const path = typeof child === 'string' ? '#' : child.path;
-                  const isActive = location.pathname === path;
+                  const isActive = location.pathname === path || (path !== '#' && location.pathname.startsWith(path));
 
                   return (
                     <Link
