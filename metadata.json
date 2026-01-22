@@ -1,0 +1,7 @@
+{
+  "name": "Olympus - Web Form Generate Prototype",
+  "description": "A high-fidelity React prototype of the Olympus Admin Panel for gym and member management, including an AI-powered Idea Assistant for Product Managers.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
