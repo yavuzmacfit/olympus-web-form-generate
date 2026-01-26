@@ -1,6 +1,6 @@
 
 import React, { useState, useMemo } from 'react';
-import { LayoutPanelLeft, Plus, Save, ArrowLeft, Image as ImageIcon, Type, Trash2, Upload, CheckCircle2, Activity, Globe, Hash, QrCode, Smartphone, Link as LinkIcon, FileText, Info, MapPin, Building2, ChevronDown, X, Settings2, Layout, SlidersHorizontal, FileEdit } from 'lucide-react';
+import { LayoutPanelLeft, Plus, Save, ArrowLeft, Image as ImageIcon, Type, Trash2, Upload, CheckCircle2, Activity, Globe, Hash, QrCode, Smartphone, Link as LinkIcon, FileText, Info, MapPin, Building2, ChevronDown, X, Settings2, Layout, SlidersHorizontal, FileEdit, Link2 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 // Mock DB - Şehir ve kulüp ilişkisi
@@ -14,6 +14,11 @@ const CITY_DATA: Record<string, string[]> = {
 
 const WebFormCreation: React.FC = () => {
   const navigate = useNavigate();
+  
+  // --- TEMEL YAPILANDIRMA ---
+  const [webFormInternalName, setWebFormInternalName] = useState('Yaz Kampanyası 2024');
+  const [webFormUrlSuffix, setWebFormUrlSuffix] = useState('yaz-kampanyasi');
+
   // --- 1. SAYFA STATE ---
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
   const [bgUrl, setBgUrl] = useState<string | null>(null);
@@ -112,6 +117,53 @@ const WebFormCreation: React.FC = () => {
       </div>
 
       <div className="space-y-12">
+        {/* TEMEL YAPILANDIRMA KARTI (YENİ) */}
+        <div className="bg-white rounded-[2.5rem] border border-gray-100 shadow-2xl shadow-gray-200/30 overflow-hidden">
+          <div className="p-8 border-b border-gray-50 flex items-center gap-4">
+             <div className="w-12 h-12 bg-gray-50 text-gray-400 rounded-2xl flex items-center justify-center">
+                <Settings2 size={24} />
+             </div>
+             <div>
+                <h3 className="text-xl font-bold text-gray-900">Temel Yapılandırma</h3>
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-0.5">FORM İSMİ VE URL ADRESİ</p>
+             </div>
+          </div>
+          <div className="p-10 space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Form İsmi */}
+              <div className="space-y-3">
+                <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest px-1">WEB FORM İSMİ</label>
+                <div className="relative">
+                  <input 
+                    type="text" 
+                    value={webFormInternalName}
+                    onChange={(e) => setWebFormInternalName(e.target.value)}
+                    placeholder="Örn: Yaz Kampanyası"
+                    className="w-full bg-gray-50/50 border border-gray-100 rounded-[1.5rem] px-6 py-4 text-sm font-bold text-gray-700 outline-none focus:border-blue-200 focus:bg-white transition-all shadow-sm"
+                  />
+                  <Type className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-300" size={18} />
+                </div>
+              </div>
+
+              {/* URL Yapılandırması */}
+              <div className="space-y-3">
+                <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest px-1">WEB SİTESİ URL</label>
+                <div className="flex items-center bg-gray-50/50 border border-gray-100 rounded-[1.5rem] px-6 py-4 shadow-sm hover:border-blue-200 transition-all focus-within:bg-white focus-within:border-blue-200">
+                  <span className="text-sm font-bold text-gray-300 select-none whitespace-nowrap">https://portal.macfit.com/form/tr/</span>
+                  <input 
+                    type="text" 
+                    value={webFormUrlSuffix}
+                    onChange={(e) => setWebFormUrlSuffix(e.target.value)}
+                    placeholder="form-adi"
+                    className="flex-1 bg-transparent border-none text-sm font-bold text-blue-600 outline-none pl-1 placeholder:text-blue-200"
+                  />
+                  <Link2 className="text-gray-300 ml-2" size={18} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* ADIM 01: GİRİŞ SAYFASI YAPILANDIRMASI */}
         <div className="bg-white rounded-[2.5rem] border border-gray-100 shadow-2xl shadow-gray-200/30 overflow-hidden">
           <div className="p-8 border-b border-gray-50 bg-white flex items-center justify-between">
