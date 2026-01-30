@@ -59,7 +59,10 @@ const WebFormCreation: React.FC = () => {
 
   // --- 3. SAYFA STATE ---
   const [successQrUrl, setSuccessQrUrl] = useState<string | null>(null);
-  const [successDownloadLink, setSuccessDownloadLink] = useState('https://mac.fit/app-indir');
+  const [activeAppTab, setActiveAppTab] = useState<'ios' | 'android' | 'huawei'>('ios');
+  const [iosLink, setIosLink] = useState('https://apps.apple.com/tr/app/mac');
+  const [androidLink, setAndroidLink] = useState('https://play.google.com/store/apps/details?id=com.macfit');
+  const [huaweiLink, setHuaweiLink] = useState('https://appgallery.huawei.com/app/C104213701');
 
   // --- ANALİTİK STATE ---
   const [eventFormAreaName, setEventFormAreaName] = useState('MAC One');
@@ -547,24 +550,52 @@ const WebFormCreation: React.FC = () => {
                   <div className="w-10 h-10 bg-emerald-50 text-emerald-500 rounded-xl flex items-center justify-center">
                     <Smartphone size={20} />
                   </div>
-                  <h4 className="text-lg font-bold text-gray-800 tracking-tight">App İndirme Linki</h4>
+                  <h4 className="text-lg font-bold text-gray-800 tracking-tight">App İndirme Linkleri</h4>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest px-1">DIRECT URL</label>
-                  <div className="relative">
-                    <input 
-                      type="text" 
-                      value={successDownloadLink} 
-                      onChange={(e) => setSuccessDownloadLink(e.target.value)}
-                      className="w-full bg-white border border-gray-100 rounded-[1.5rem] px-6 py-4 text-sm font-semibold text-emerald-600 shadow-sm outline-none"
-                    />
-                    <LinkIcon className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-200" size={18} />
+                
+                <div className="space-y-4">
+                  {/* Store Tabs */}
+                  <div className="flex gap-2 p-1 bg-gray-50 rounded-2xl w-fit">
+                    {(['ios', 'android', 'huawei'] as const).map((tab) => (
+                      <button
+                        key={tab}
+                        onClick={() => setActiveAppTab(tab)}
+                        className={`px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                          activeAppTab === tab 
+                            ? 'bg-white text-emerald-600 shadow-sm' 
+                            : 'text-gray-400 hover:text-gray-600'
+                        }`}
+                      >
+                        {tab}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest px-1">
+                      {activeAppTab.toUpperCase()} STORE URL
+                    </label>
+                    <div className="relative">
+                      <input 
+                        type="text" 
+                        value={activeAppTab === 'ios' ? iosLink : activeAppTab === 'android' ? androidLink : huaweiLink} 
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          if (activeAppTab === 'ios') setIosLink(val);
+                          else if (activeAppTab === 'android') setAndroidLink(val);
+                          else setHuaweiLink(val);
+                        }}
+                        className="w-full bg-white border border-gray-100 rounded-[1.5rem] px-6 py-4 text-sm font-semibold text-emerald-600 shadow-sm outline-none focus:border-emerald-200"
+                      />
+                      <LinkIcon className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-200" size={18} />
+                    </div>
                   </div>
                 </div>
+
                 <div className="bg-emerald-50/50 border border-emerald-100 rounded-3xl p-6 flex gap-4">
                   <Info size={16} className="text-emerald-500 mt-1 shrink-0" />
                   <p className="text-[12px] text-emerald-800 leading-relaxed font-medium italic">
-                    Kullanıcı formu tamamladığında QR kodu ve uygulama linki butonu gösterilecektir.
+                    Kullanıcı formu tamamladığında işletim sistemine göre ilgili uygulama linki butonu gösterilecektir.
                   </p>
                 </div>
               </div>
@@ -632,7 +663,7 @@ const WebFormCreation: React.FC = () => {
 
         {/* FOOTER */}
         <div className="text-center space-y-2 pt-8">
-          <p className="text-[11px] font-bold text-gray-400 font-inter">© 2024 Olympus Web Form Generator • Prototype v2.11 (Smart Sync Selection)</p>
+          <p className="text-[11px] font-bold text-gray-400 font-inter">© 2024 Olympus Web Form Generator • Prototype v2.11 (Multi-Platform App Links)</p>
         </div>
       </div>
     </div>
