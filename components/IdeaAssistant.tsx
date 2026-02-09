@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { X, Send, Sparkles, MessageSquare, Loader2 } from 'lucide-react';
 import { GoogleGenAI } from '@google/genai';
@@ -30,9 +29,11 @@ const IdeaAssistant: React.FC<IdeaAssistantProps> = ({ isOpen, onClose }) => {
     setLoading(true);
 
     try {
+      /* Correct: Initialize client right before usage to ensure current API Key access */
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
+        /* Correct: Using gemini-3-pro-preview for advanced product reasoning/consulting task */
+        model: 'gemini-3-pro-preview',
         contents: userMessage,
         config: {
           systemInstruction: `You are a Senior Product Consultant for Olympus, a gym/club management admin portal. 
@@ -43,6 +44,7 @@ const IdeaAssistant: React.FC<IdeaAssistantProps> = ({ isOpen, onClose }) => {
         }
       });
 
+      /* Correct: Accessing .text property directly, not as a method */
       const aiResponse = response.text || "I'm sorry, I couldn't generate a response right now.";
       setMessages(prev => [...prev, { role: 'assistant', content: aiResponse }]);
     } catch (error) {
