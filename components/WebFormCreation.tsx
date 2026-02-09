@@ -61,7 +61,7 @@ const WebFormCreation: React.FC = () => {
   const [androidLink, setAndroidLink] = useState('https://play.google.com/store/apps/details?id=com.macfit');
   const [huaweiLink, setHuaweiLink] = useState('');
 
-  // Yeni Eklenen "Teşekkürler Sayfası" State Alanları
+  // "Teşekkürler Sayfası" State Alanları
   const [thanksTitleTR, setThanksTitleTR] = useState('Tebrikler, Mert!');
   const [thanksTitleEN, setThanksTitleEN] = useState('Congratulations, Mert!');
   const [thanksDescTR, setThanksDescTR] = useState('1 Günlük Giriş Hakkı Kazandın!');
@@ -201,7 +201,7 @@ const WebFormCreation: React.FC = () => {
           <div className="p-10"><SectionLabel label="Form Başlık Metni" /><div className="grid grid-cols-1 md:grid-cols-2 gap-8"><div className="space-y-2"><LangIndicator lang="TR" current={step2FormNameTR.length} max={40} /><div className="relative"><input type="text" maxLength={40} value={step2FormNameTR} onChange={(e) => setStep2FormNameTR(e.target.value)} className="w-full bg-white border border-gray-100 rounded-[1.5rem] px-6 py-4 text-sm font-semibold text-gray-700 shadow-sm outline-none focus:border-red-400" /><FileText className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-100" size={18} /></div></div><div className="space-y-2"><LangIndicator lang="EN" current={step2FormNameEN.length} max={40} /><div className="relative"><input type="text" maxLength={40} value={step2FormNameEN} onChange={(e) => setStep2FormNameEN(e.target.value)} className="w-full bg-white border border-gray-100 rounded-[1.5rem] px-6 py-4 text-sm font-semibold text-gray-700 shadow-sm outline-none focus:border-blue-400" /><FileText className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-100" size={18} /></div></div></div></div>
         </div>
 
-        {/* SON SAYFA: TEŞEKKÜRLER SAYFASI (YENİLENEN YAPILANDIRMA) */}
+        {/* SON SAYFA: TEŞEKKÜRLER SAYFASI */}
         <div className="bg-white rounded-[2.5rem] border border-gray-100 shadow-2xl shadow-gray-200/30 overflow-hidden">
           <div className="p-8 border-b border-gray-50 bg-white flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -212,27 +212,26 @@ const WebFormCreation: React.FC = () => {
           </div>
 
           <div className="p-10 space-y-12">
-            {/* 1. Tebrikler Mesajı (Üst Başlık ve Alt Açıklama) */}
-            <section className="space-y-8">
+            {/* 1. Tebrikler Mesajı */}
+            <section className="space-y-10">
               <div className="flex items-center gap-3 px-1"><div className="w-8 h-8 bg-emerald-50 text-emerald-500 rounded-lg flex items-center justify-center"><Type size={18} /></div><h4 className="text-lg font-bold text-gray-800">Tebrikler Mesajı</h4></div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <div className="space-y-6">
-                   <SectionLabel label="Tebrikler Üst Başlık" />
-                   <div className="space-y-4">
-                     <div className="space-y-1.5"><LangIndicator lang="TR" /><input type="text" value={thanksTitleTR} onChange={(e) => setThanksTitleTR(e.target.value)} className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-3.5 text-sm font-semibold outline-none focus:border-emerald-300 transition-all shadow-sm" /></div>
-                     <div className="space-y-1.5"><LangIndicator lang="EN" /><input type="text" value={thanksTitleEN} onChange={(e) => setThanksTitleEN(e.target.value)} className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-3.5 text-sm font-semibold outline-none focus:border-emerald-300 transition-all shadow-sm" /></div>
-                   </div>
-                </div>
-                <div className="space-y-6">
-                   <SectionLabel label="Tebrikler Alt Açıklama" />
-                   <div className="space-y-4">
-                     <div className="space-y-1.5"><LangIndicator lang="TR" /><input type="text" value={thanksDescTR} onChange={(e) => setThanksDescTR(e.target.value)} className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-3.5 text-sm font-semibold outline-none focus:border-emerald-300 transition-all shadow-sm" /></div>
-                     <div className="space-y-1.5"><LangIndicator lang="EN" /><input type="text" value={thanksDescEN} onChange={(e) => setThanksDescEN(e.target.value)} className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-3.5 text-sm font-semibold outline-none focus:border-emerald-300 transition-all shadow-sm" /></div>
-                   </div>
+              
+              <div className="space-y-0">
+                <SectionLabel label="Tebrikler Üst Başlık" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-2"><LangIndicator lang="TR" /><input type="text" value={thanksTitleTR} onChange={(e) => setThanksTitleTR(e.target.value)} className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-4 text-sm font-semibold outline-none focus:border-emerald-300 transition-all shadow-sm" /></div>
+                  <div className="space-y-2"><LangIndicator lang="EN" /><input type="text" value={thanksTitleEN} onChange={(e) => setThanksTitleEN(e.target.value)} className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-4 text-sm font-semibold outline-none focus:border-emerald-300 transition-all shadow-sm" /></div>
                 </div>
               </div>
 
-              {/* Checkboxlar */}
+              <div className="space-y-0">
+                <SectionLabel label="Tebrikler Alt Açıklama" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-2"><LangIndicator lang="TR" /><input type="text" value={thanksDescTR} onChange={(e) => setThanksDescTR(e.target.value)} className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-4 text-sm font-semibold outline-none focus:border-emerald-300 transition-all shadow-sm" /></div>
+                  <div className="space-y-2"><LangIndicator lang="EN" /><input type="text" value={thanksDescEN} onChange={(e) => setThanksDescEN(e.target.value)} className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-4 text-sm font-semibold outline-none focus:border-emerald-300 transition-all shadow-sm" /></div>
+                </div>
+              </div>
+
               <div className="bg-gray-50/50 p-8 rounded-[2rem] border border-gray-100 flex flex-wrap gap-12">
                  <div className="flex items-center gap-4 cursor-pointer select-none" onClick={() => setShowExpiryDate(!showExpiryDate)}>
                     <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all ${showExpiryDate ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100' : 'bg-white border-2 border-gray-100 text-gray-200'}`}>{showExpiryDate ? <CheckSquare size={20} /> : <Square size={20} />}</div>
@@ -245,51 +244,62 @@ const WebFormCreation: React.FC = () => {
               </div>
             </section>
 
-            {/* 2. Adımlar (Kulübe Nasıl Girerim?) */}
-            <section className="space-y-8">
+            {/* 2. Adımlar */}
+            <section className="space-y-10">
               <div className="flex items-center gap-3 px-1"><div className="w-8 h-8 bg-blue-50 text-blue-500 rounded-lg flex items-center justify-center"><SlidersHorizontal size={18} /></div><h4 className="text-lg font-bold text-gray-800">Adımlar</h4></div>
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
-                 <div className="md:col-span-4 space-y-6">
-                    <SectionLabel label="Başlık Metni (Kırmızı Alan)" />
-                    <div className="space-y-4">
-                      <div className="space-y-1.5"><LangIndicator lang="TR" /><input type="text" value={stepsTitleTR} onChange={(e) => setStepsTitleTR(e.target.value)} className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-3.5 text-sm font-semibold outline-none focus:border-blue-300 transition-all shadow-sm" /></div>
-                      <div className="space-y-1.5"><LangIndicator lang="EN" /><input type="text" value={stepsTitleEN} onChange={(e) => setStepsTitleEN(e.target.value)} className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-3.5 text-sm font-semibold outline-none focus:border-blue-300 transition-all shadow-sm" /></div>
-                    </div>
-                 </div>
-                 <div className="md:col-span-8 space-y-4">
-                    <div className="flex items-center justify-between px-1"><label className="text-[11px] font-black text-gray-400 uppercase tracking-widest">Madde Ekle (Mavi Alan - Max 4, Min 3)</label>{stepsItems.length < 4 && (<button onClick={() => setStepsItems([...stepsItems, {tr: '', en: ''}])} className="text-blue-600 bg-blue-50 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase flex items-center gap-2 hover:bg-blue-100 transition-all"><Plus size={14} /> Adım Ekle</button>)}</div>
-                    <div className="grid grid-cols-1 gap-4">{stepsItems.map((item, idx) => (<div key={idx} className="flex gap-4 items-center bg-gray-50/50 p-4 rounded-3xl border border-gray-100 relative group"><div className="w-10 h-10 bg-white border border-gray-100 rounded-2xl flex items-center justify-center text-sm font-black text-blue-600 shadow-sm shrink-0">{idx + 1}</div><div className="flex-1 grid grid-cols-2 gap-4"><input type="text" placeholder="TR Adım" value={item.tr} onChange={(e) => { const n = [...stepsItems]; n[idx].tr = e.target.value; setStepsItems(n); }} className="bg-white border border-gray-100 rounded-xl px-4 py-2 text-xs font-semibold outline-none focus:border-blue-200" /><input type="text" placeholder="EN Adım" value={item.en} onChange={(e) => { const n = [...stepsItems]; n[idx].en = e.target.value; setStepsItems(n); }} className="bg-white border border-gray-100 rounded-xl px-4 py-2 text-xs font-semibold outline-none focus:border-blue-200" /></div>{stepsItems.length > 3 && (<button onClick={() => setStepsItems(stepsItems.filter((_, i) => i !== idx))} className="text-red-300 hover:text-red-500 transition-colors p-2"><Trash2 size={16} /></button>)}</div>))}</div>
-                 </div>
+              
+              <div className="space-y-0">
+                <SectionLabel label="Başlık Metni (Kırmızı Alan)" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-2"><LangIndicator lang="TR" /><input type="text" value={stepsTitleTR} onChange={(e) => setStepsTitleTR(e.target.value)} className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-4 text-sm font-semibold outline-none focus:border-blue-300 transition-all shadow-sm" /></div>
+                  <div className="space-y-2"><LangIndicator lang="EN" /><input type="text" value={stepsTitleEN} onChange={(e) => setStepsTitleEN(e.target.value)} className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-4 text-sm font-semibold outline-none focus:border-blue-300 transition-all shadow-sm" /></div>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex items-center justify-between px-1"><label className="text-[11px] font-black text-gray-400 uppercase tracking-widest">Madde Ekle (Mavi Alan - Max 4, Min 3)</label>{stepsItems.length < 4 && (<button onClick={() => setStepsItems([...stepsItems, {tr: '', en: ''}])} className="text-blue-600 bg-blue-50 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase flex items-center gap-2 hover:bg-blue-100 transition-all"><Plus size={14} /> Adım Ekle</button>)}</div>
+                <div className="grid grid-cols-1 gap-4">{stepsItems.map((item, idx) => (<div key={idx} className="flex gap-4 items-center bg-gray-50/50 p-4 rounded-3xl border border-gray-100 relative group"><div className="w-10 h-10 bg-white border border-gray-100 rounded-2xl flex items-center justify-center text-sm font-black text-blue-600 shadow-sm shrink-0">{idx + 1}</div><div className="flex-1 grid grid-cols-2 gap-4"><input type="text" placeholder="TR Adım" value={item.tr} onChange={(e) => { const n = [...stepsItems]; n[idx].tr = e.target.value; setStepsItems(n); }} className="bg-white border border-gray-100 rounded-xl px-4 py-2 text-xs font-semibold outline-none focus:border-blue-200" /><input type="text" placeholder="EN Adım" value={item.en} onChange={(e) => { const n = [...stepsItems]; n[idx].en = e.target.value; setStepsItems(n); }} className="bg-white border border-gray-100 rounded-xl px-4 py-2 text-xs font-semibold outline-none focus:border-blue-200" /></div>{stepsItems.length > 3 && (<button onClick={() => setStepsItems(stepsItems.filter((_, i) => i !== idx))} className="text-red-300 hover:text-red-500 transition-colors p-2"><Trash2 size={16} /></button>)}</div>))}</div>
               </div>
             </section>
 
             {/* 3. Mac+ Bilgilendirme */}
-            <section className="space-y-8">
+            <section className="space-y-10">
               <div className="flex items-center gap-3 px-1"><div className="w-8 h-8 bg-purple-50 text-purple-500 rounded-lg flex items-center justify-center"><Info size={18} /></div><h4 className="text-lg font-bold text-gray-800">Mac+ Bilgilendirme</h4></div>
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
-                 <div className="md:col-span-4 space-y-6">
-                    <SectionLabel label="Başlık Metni (Kırmızı Alan)" />
-                    <div className="space-y-4">
-                      <div className="space-y-1.5"><LangIndicator lang="TR" /><input type="text" value={infoTitleTR} onChange={(e) => setInfoTitleTR(e.target.value)} className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-3.5 text-sm font-semibold outline-none focus:border-purple-300 transition-all shadow-sm" /></div>
-                      <div className="space-y-1.5"><LangIndicator lang="EN" /><input type="text" value={infoTitleEN} onChange={(e) => setInfoTitleEN(e.target.value)} className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-3.5 text-sm font-semibold outline-none focus:border-purple-300 transition-all shadow-sm" /></div>
-                    </div>
-                 </div>
-                 <div className="md:col-span-8 space-y-4">
-                    <div className="flex items-center justify-between px-1"><label className="text-[11px] font-black text-gray-400 uppercase tracking-widest">Madde Ekle (Mavi Alan - Max 4, Min 3)</label>{infoItems.length < 4 && (<button onClick={() => setInfoItems([...infoItems, {tr: '', en: ''}])} className="text-purple-600 bg-purple-50 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase flex items-center gap-2 hover:bg-purple-100 transition-all"><Plus size={14} /> Madde Ekle</button>)}</div>
-                    <div className="grid grid-cols-1 gap-4">{infoItems.map((item, idx) => (<div key={idx} className="flex gap-4 items-center bg-gray-50/50 p-4 rounded-3xl border border-gray-100 relative group"><div className="w-10 h-10 bg-white border border-gray-100 rounded-2xl flex items-center justify-center text-sm font-black text-purple-600 shadow-sm shrink-0"><CheckCircle2 size={18} /></div><div className="flex-1 grid grid-cols-2 gap-4"><input type="text" placeholder="TR Bilgi" value={item.tr} onChange={(e) => { const n = [...infoItems]; n[idx].tr = e.target.value; setInfoItems(n); }} className="bg-white border border-gray-100 rounded-xl px-4 py-2 text-xs font-semibold outline-none focus:border-purple-200" /><input type="text" placeholder="EN Bilgi" value={item.en} onChange={(e) => { const n = [...infoItems]; n[idx].en = e.target.value; setInfoItems(n); }} className="bg-white border border-gray-100 rounded-xl px-4 py-2 text-xs font-semibold outline-none focus:border-purple-200" /></div>{infoItems.length > 3 && (<button onClick={() => setInfoItems(infoItems.filter((_, i) => i !== idx))} className="text-red-300 hover:text-red-500 transition-colors p-2"><Trash2 size={16} /></button>)}</div>))}</div>
-                 </div>
+              
+              <div className="space-y-0">
+                <SectionLabel label="Başlık Metni (Kırmızı Alan)" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-2"><LangIndicator lang="TR" /><input type="text" value={infoTitleTR} onChange={(e) => setInfoTitleTR(e.target.value)} className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-4 text-sm font-semibold outline-none focus:border-purple-300 transition-all shadow-sm" /></div>
+                  <div className="space-y-2"><LangIndicator lang="EN" /><input type="text" value={infoTitleEN} onChange={(e) => setInfoTitleEN(e.target.value)} className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-4 text-sm font-semibold outline-none focus:border-purple-300 transition-all shadow-sm" /></div>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex items-center justify-between px-1"><label className="text-[11px] font-black text-gray-400 uppercase tracking-widest">Madde Ekle (Mavi Alan - Max 4, Min 3)</label>{infoItems.length < 4 && (<button onClick={() => setInfoItems([...infoItems, {tr: '', en: ''}])} className="text-purple-600 bg-purple-50 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase flex items-center gap-2 hover:bg-purple-100 transition-all"><Plus size={14} /> Madde Ekle</button>)}</div>
+                <div className="grid grid-cols-1 gap-4">{infoItems.map((item, idx) => (<div key={idx} className="flex gap-4 items-center bg-gray-50/50 p-4 rounded-3xl border border-gray-100 relative group"><div className="w-10 h-10 bg-white border border-gray-100 rounded-2xl flex items-center justify-center text-sm font-black text-purple-600 shadow-sm shrink-0"><CheckCircle2 size={18} /></div><div className="flex-1 grid grid-cols-2 gap-4"><input type="text" placeholder="TR Bilgi" value={item.tr} onChange={(e) => { const n = [...infoItems]; n[idx].tr = e.target.value; setInfoItems(n); }} className="bg-white border border-gray-100 rounded-xl px-4 py-2 text-xs font-semibold outline-none focus:border-purple-200" /><input type="text" placeholder="EN Bilgi" value={item.en} onChange={(e) => { const n = [...infoItems]; n[idx].en = e.target.value; setInfoItems(n); }} className="bg-white border border-gray-100 rounded-xl px-4 py-2 text-xs font-semibold outline-none focus:border-purple-200" /></div>{infoItems.length > 3 && (<button onClick={() => setInfoItems(infoItems.filter((_, i) => i !== idx))} className="text-red-300 hover:text-red-500 transition-colors p-2"><Trash2 size={16} /></button>)}</div>))}</div>
               </div>
             </section>
 
             {/* 4. Buton ve Dip Not */}
             <section className="space-y-12">
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                  <div className="space-y-6"><div className="flex items-center gap-3 px-1"><div className="w-8 h-8 bg-red-50 text-red-500 rounded-lg flex items-center justify-center"><Smartphone size={18} /></div><h4 className="text-lg font-bold text-gray-800">Buton Metni (Mac+ İndir)</h4></div><div className="space-y-4"><div className="space-y-1.5"><LangIndicator lang="TR" /><input type="text" value={downloadBtnTR} onChange={(e) => setDownloadBtnTR(e.target.value)} className="w-full bg-red-50/30 border border-red-100 rounded-2xl px-6 py-4 text-sm font-black text-red-600 tracking-wider text-center outline-none focus:border-red-300 transition-all" /></div><div className="space-y-1.5"><LangIndicator lang="EN" /><input type="text" value={downloadBtnEN} onChange={(e) => setDownloadBtnEN(e.target.value)} className="w-full bg-red-50/30 border border-red-100 rounded-2xl px-6 py-4 text-sm font-black text-red-600 tracking-wider text-center outline-none focus:border-red-300 transition-all" /></div></div></div>
-                  <div className="space-y-6"><div className="flex items-center gap-3 px-1"><div className="w-8 h-8 bg-gray-50 text-gray-400 rounded-lg flex items-center justify-center"><FileText size={18} /></div><h4 className="text-lg font-bold text-gray-800">Form Dip Not</h4></div><div className="space-y-4"><div className="space-y-1.5"><LangIndicator lang="TR" /><input type="text" value={footerNoteTR} onChange={(e) => setFooterNoteTR(e.target.value)} className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-3.5 text-sm font-semibold outline-none focus:border-gray-300 transition-all shadow-sm" /></div><div className="space-y-1.5"><LangIndicator lang="EN" /><input type="text" value={footerNoteEN} onChange={(e) => setFooterNoteEN(e.target.value)} className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-3.5 text-sm font-semibold outline-none focus:border-gray-300 transition-all shadow-sm" /></div></div></div>
+               <div className="space-y-10">
+                  <div className="flex items-center gap-3 px-1"><div className="w-8 h-8 bg-red-50 text-red-500 rounded-lg flex items-center justify-center"><Smartphone size={18} /></div><h4 className="text-lg font-bold text-gray-800">Buton Metni (Mac+ İndir)</h4></div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                     <div className="space-y-2"><LangIndicator lang="TR" /><input type="text" value={downloadBtnTR} onChange={(e) => setDownloadBtnTR(e.target.value)} className="w-full bg-red-50/30 border border-red-100 rounded-2xl px-6 py-5 text-sm font-black text-red-600 tracking-wider text-center outline-none focus:border-red-300 transition-all shadow-sm" /></div>
+                     <div className="space-y-2"><LangIndicator lang="EN" /><input type="text" value={downloadBtnEN} onChange={(e) => setDownloadBtnEN(e.target.value)} className="w-full bg-red-50/30 border border-red-100 rounded-2xl px-6 py-5 text-sm font-black text-red-600 tracking-wider text-center outline-none focus:border-red-300 transition-all shadow-sm" /></div>
+                  </div>
+               </div>
+
+               <div className="space-y-10">
+                  <div className="flex items-center gap-3 px-1"><div className="w-8 h-8 bg-gray-50 text-gray-400 rounded-lg flex items-center justify-center"><FileText size={18} /></div><h4 className="text-lg font-bold text-gray-800">Form Dip Not</h4></div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                     <div className="space-y-2"><LangIndicator lang="TR" /><input type="text" value={footerNoteTR} onChange={(e) => setFooterNoteTR(e.target.value)} className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-4 text-sm font-semibold outline-none focus:border-gray-300 transition-all shadow-sm" /></div>
+                     <div className="space-y-2"><LangIndicator lang="EN" /><input type="text" value={footerNoteEN} onChange={(e) => setFooterNoteEN(e.target.value)} className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-4 text-sm font-semibold outline-none focus:border-gray-300 transition-all shadow-sm" /></div>
+                  </div>
                </div>
             </section>
 
-            {/* QR ve App Linkleri (Tab Yapısı) */}
+            {/* QR ve App Linkleri */}
             <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pt-8 border-t border-gray-50">
               <div className="md:col-span-4 space-y-4"><label className="text-[11px] font-black text-gray-400 uppercase tracking-widest px-1">UYGULAMA QR KODU</label><label className="flex flex-col items-center justify-center w-full h-[240px] border-2 border-dashed border-gray-100 rounded-[2.5rem] cursor-pointer hover:bg-emerald-50/30 hover:border-emerald-200 transition-all group overflow-hidden bg-white relative">{successQrUrl ? <img src={successQrUrl} className="w-full h-full object-contain p-8" /> : <div className="text-center space-y-4"><div className="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center mx-auto group-hover:bg-emerald-100 transition-colors"><QrCode className="text-gray-200 group-hover:text-emerald-500" size={32} /></div><p className="text-sm font-bold text-gray-400 uppercase tracking-widest">QR Yükle</p></div>}<input type="file" className="hidden" onChange={(e) => handleImageUpload(e, setSuccessQrUrl)} /></label></div>
               <div className="md:col-span-8 space-y-6 flex flex-col justify-center">
@@ -308,14 +318,14 @@ const WebFormCreation: React.FC = () => {
           <div className="p-8 border-b border-gray-50 bg-white flex items-center justify-between"><div className="flex items-center gap-4"><div className="w-12 h-12 bg-pink-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-pink-100"><Activity size={24} /></div><div><h3 className="text-xl font-bold text-gray-900">Event Takip Tanımları</h3><p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-0.5 font-inter">ANALİTİK PARAMETRELER</p></div></div><div className="px-4 py-1.5 bg-pink-50 text-pink-600 rounded-full text-[10px] font-black tracking-widest uppercase flex items-center gap-1.5"><Activity size={12} /> GTM / GA4</div></div>
           <div className="p-10 space-y-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="space-y-2"><label className="text-[11px] font-black text-gray-400 uppercase tracking-widest px-1">FORM_AREA_NAME</label><div className="relative"><input type="text" value={eventFormAreaName} onChange={(e) => setEventFormAreaName(e.target.value)} className="w-full bg-white border border-gray-100 rounded-[2rem] px-8 py-5 text-sm font-semibold text-gray-700 shadow-sm outline-none focus:border-pink-200" /><Layout className="absolute right-8 top-1/2 -translate-y-1/2 text-gray-200" size={20} /></div></div>
+              <div className="space-y-2"><label className="text-[11px] font-black text-gray-400 uppercase tracking-widest px-1">FORM_AREA_NAME</label><div className="relative"><input type="text" value={eventFormAreaName} onChange={(e) => setEventFormAreaName(eventFormAreaName)} className="w-full bg-white border border-gray-100 rounded-[2rem] px-8 py-5 text-sm font-semibold text-gray-700 shadow-sm outline-none focus:border-pink-200" /><Layout className="absolute right-8 top-1/2 -translate-y-1/2 text-gray-200" size={20} /></div></div>
               <div className="space-y-2"><label className="text-[11px] font-black text-gray-400 uppercase tracking-widest px-1">GTM EVENT ID</label><div className="relative"><input type="text" value={eventGtmId} onChange={(e) => setEventGtmId(e.target.value)} className="w-full bg-white border border-gray-100 rounded-[2rem] px-8 py-5 text-sm font-semibold text-gray-700 shadow-sm outline-none focus:border-pink-200" /><Hash className="absolute right-8 top-1/2 -translate-y-1/2 text-gray-200" size={20} /></div></div>
             </div>
             <div className="space-y-2"><label className="text-[11px] font-black text-gray-400 uppercase tracking-widest px-1">PAGE_URL</label><div className="relative"><input type="text" value={eventPageUrl} onChange={(e) => setEventPageUrl(e.target.value)} className="w-full bg-white border border-gray-100 rounded-[2rem] px-8 py-5 text-sm font-semibold text-gray-700 shadow-sm outline-none focus:border-pink-200" /><Globe className="absolute right-8 top-1/2 -translate-y-1/2 text-gray-200" size={20} /></div></div>
           </div>
         </div>
 
-        <div className="text-center space-y-2 pt-8"><p className="text-[11px] font-bold text-gray-400 font-inter">© 2024 Olympus Web Form Generator • Prototype v2.14 (Detailed Thank You Config)</p></div>
+        <div className="text-center space-y-2 pt-8"><p className="text-[11px] font-bold text-gray-400 font-inter">© 2024 Olympus Web Form Generator • Prototype v2.14 (Horizontal Layouts Update)</p></div>
       </div>
     </div>
   );
