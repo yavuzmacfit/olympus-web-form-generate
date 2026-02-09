@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from 'react';
 import { LayoutPanelLeft, Plus, Save, ArrowLeft, Image as ImageIcon, Type, Trash2, Upload, CheckCircle2, Activity, Globe, Hash, QrCode, Smartphone, Link as LinkIcon, FileText, Info, MapPin, Building2, ChevronDown, X, Settings2, Layout, SlidersHorizontal, FileEdit, Link2, Languages, Search, AlertCircle, CheckSquare, Square } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -232,14 +233,26 @@ const WebFormCreation: React.FC = () => {
                 </div>
               </div>
 
+              {/* Geliştirilmiş Toggle Switch Checkbox Alanı */}
               <div className="bg-gray-50/50 p-8 rounded-[2rem] border border-gray-100 flex flex-wrap gap-12">
-                 <div className="flex items-center gap-4 cursor-pointer select-none" onClick={() => setShowExpiryDate(!showExpiryDate)}>
-                    <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all ${showExpiryDate ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100' : 'bg-white border-2 border-gray-100 text-gray-200'}`}>{showExpiryDate ? <CheckSquare size={20} /> : <Square size={20} />}</div>
-                    <div><p className="text-sm font-bold text-gray-700">Son Kullanma Tarihi</p><p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-0.5">SAYFADA GÖSTER</p></div>
+                 <div className="flex items-center gap-4 group cursor-pointer select-none" onClick={() => setShowExpiryDate(!showExpiryDate)}>
+                    <div className={`relative w-12 h-6 rounded-full transition-all duration-300 ${showExpiryDate ? 'bg-emerald-500 shadow-lg shadow-emerald-100' : 'bg-gray-200'}`}>
+                       <div className={`absolute top-1 left-1 bg-white w-4 h-4 rounded-full transition-all duration-300 transform ${showExpiryDate ? 'translate-x-6' : 'translate-x-0'}`}></div>
+                    </div>
+                    <div>
+                      <p className={`text-sm font-bold transition-colors ${showExpiryDate ? 'text-emerald-700' : 'text-gray-700'}`}>Son Kullanma Tarihi</p>
+                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-0.5">SAYFADA GÖSTER</p>
+                    </div>
                  </div>
-                 <div className="flex items-center gap-4 cursor-pointer select-none" onClick={() => setShowValidClub(!showValidClub)}>
-                    <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all ${showValidClub ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100' : 'bg-white border-2 border-gray-100 text-gray-200'}`}>{showValidClub ? <CheckSquare size={20} /> : <Square size={20} />}</div>
-                    <div><p className="text-sm font-bold text-gray-700">Geçerli Kulüp</p><p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-0.5">SAYFADA GÖSTER</p></div>
+
+                 <div className="flex items-center gap-4 group cursor-pointer select-none" onClick={() => setShowValidClub(!showValidClub)}>
+                    <div className={`relative w-12 h-6 rounded-full transition-all duration-300 ${showValidClub ? 'bg-emerald-500 shadow-lg shadow-emerald-100' : 'bg-gray-200'}`}>
+                       <div className={`absolute top-1 left-1 bg-white w-4 h-4 rounded-full transition-all duration-300 transform ${showValidClub ? 'translate-x-6' : 'translate-x-0'}`}></div>
+                    </div>
+                    <div>
+                      <p className={`text-sm font-bold transition-colors ${showValidClub ? 'text-emerald-700' : 'text-gray-700'}`}>Geçerli Kulüp</p>
+                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-0.5">SAYFADA GÖSTER</p>
+                    </div>
                  </div>
               </div>
             </section>
@@ -325,7 +338,7 @@ const WebFormCreation: React.FC = () => {
           </div>
         </div>
 
-        <div className="text-center space-y-2 pt-8"><p className="text-[11px] font-bold text-gray-400 font-inter">© 2024 Olympus Web Form Generator • Prototype v2.14 (Horizontal Layouts Update)</p></div>
+        <div className="text-center space-y-2 pt-8"><p className="text-[11px] font-bold text-gray-400 font-inter">© 2024 Olympus Web Form Generator • Prototype v2.14 (Switch UI Pattern Update)</p></div>
       </div>
     </div>
   );
