@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const CLUB_TYPE_DATA: Record<string, string[]> = {
   "MacFit": ["MacFit Cadde", "MacFit Nişantaşı", "MacFit Maltepe", "MacFit Fulya", "MacFit Trump"],
   "Mac/ONE": ["MAC/One Bebek", "MAC/One Caddebostan", "MAC/One Ataşehir", "MAC/One Ortaköy", "MAC/One Nişantaşı"],
-  "MACStudio": ["MACStudio Levent", "MACStudio Maslak", "MACStudio Akaretler"]
+  "MACStudio": ["MACStudio Levent", "MACStudio Akaretler"]
 };
 
 interface BulletPair {
@@ -55,6 +55,7 @@ const WebFormCreation: React.FC = () => {
 
   // --- 3. SAYFA STATE (TEŞEKKÜRLER) ---
   const [successQrUrl, setSuccessQrUrl] = useState<string | null>(null);
+  const [thanksBottomImgUrl, setThanksBottomImgUrl] = useState<string | null>(null);
   const [activeAppTab, setActiveAppTab] = useState<'appsflyer' | 'ios' | 'android' | 'huawei'>('appsflyer');
   const [appsFlyerLink, setAppsFlyerLink] = useState('');
   const [iosLink, setIosLink] = useState('https://apps.apple.com/tr/app/mac');
@@ -279,26 +280,50 @@ const WebFormCreation: React.FC = () => {
                 </div>
               </div>
 
-              {/* Geliştirilmiş Toggle Switch Checkbox Alanı */}
-              <div className="bg-gray-50/50 p-8 rounded-[2rem] border border-gray-100 flex flex-wrap gap-12">
-                 <div className="flex items-center gap-4 group cursor-pointer select-none" onClick={() => setShowExpiryDate(!showExpiryDate)}>
-                    <div className={`relative w-12 h-6 rounded-full transition-all duration-300 ${showExpiryDate ? 'bg-emerald-500 shadow-lg shadow-emerald-100' : 'bg-gray-200'}`}>
-                       <div className={`absolute top-1 left-1 bg-white w-4 h-4 rounded-full transition-all duration-300 transform ${showExpiryDate ? 'translate-x-6' : 'translate-x-0'}`}></div>
-                    </div>
-                    <div>
-                      <p className={`text-sm font-bold transition-colors ${showExpiryDate ? 'text-emerald-700' : 'text-gray-700'}`}>Son Kullanma Tarihi</p>
-                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-0.5">SAYFADA GÖSTER</p>
-                    </div>
+              {/* Toggles and Visual Asset Layout */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                 {/* Toggles Box */}
+                 <div className="bg-gray-50/50 p-8 rounded-[2rem] border border-gray-100 flex flex-wrap gap-12 h-full items-center">
+                   <div className="flex items-center gap-4 group cursor-pointer select-none" onClick={() => setShowExpiryDate(!showExpiryDate)}>
+                      <div className={`relative w-12 h-6 rounded-full transition-all duration-300 ${showExpiryDate ? 'bg-emerald-500 shadow-lg shadow-emerald-100' : 'bg-gray-200'}`}>
+                         <div className={`absolute top-1 left-1 bg-white w-4 h-4 rounded-full transition-all duration-300 transform ${showExpiryDate ? 'translate-x-6' : 'translate-x-0'}`}></div>
+                      </div>
+                      <div>
+                        <p className={`text-sm font-bold transition-colors ${showExpiryDate ? 'text-emerald-700' : 'text-gray-700'}`}>Son Kullanma Tarihi</p>
+                        <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-0.5">SAYFADA GÖSTER</p>
+                      </div>
+                   </div>
+
+                   <div className="flex items-center gap-4 group cursor-pointer select-none" onClick={() => setShowValidClub(!showValidClub)}>
+                      <div className={`relative w-12 h-6 rounded-full transition-all duration-300 ${showValidClub ? 'bg-emerald-500 shadow-lg shadow-emerald-100' : 'bg-gray-200'}`}>
+                         <div className={`absolute top-1 left-1 bg-white w-4 h-4 rounded-full transition-all duration-300 transform ${showValidClub ? 'translate-x-6' : 'translate-x-0'}`}></div>
+                      </div>
+                      <div>
+                        <p className={`text-sm font-bold transition-colors ${showValidClub ? 'text-emerald-700' : 'text-gray-700'}`}>Geçerli Kulüp</p>
+                        <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-0.5">SAYFADA GÖSTER</p>
+                      </div>
+                   </div>
                  </div>
 
-                 <div className="flex items-center gap-4 group cursor-pointer select-none" onClick={() => setShowValidClub(!showValidClub)}>
-                    <div className={`relative w-12 h-6 rounded-full transition-all duration-300 ${showValidClub ? 'bg-emerald-500 shadow-lg shadow-emerald-100' : 'bg-gray-200'}`}>
-                       <div className={`absolute top-1 left-1 bg-white w-4 h-4 rounded-full transition-all duration-300 transform ${showValidClub ? 'translate-x-6' : 'translate-x-0'}`}></div>
-                    </div>
-                    <div>
-                      <p className={`text-sm font-bold transition-colors ${showValidClub ? 'text-emerald-700' : 'text-gray-700'}`}>Geçerli Kulüp</p>
-                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-0.5">SAYFADA GÖSTER</p>
-                    </div>
+                 {/* Visual Asset Upload Area */}
+                 <div className="space-y-4 h-full flex flex-col">
+                    <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest px-1">görsel varlık</label>
+                    <label className="flex-1 flex flex-col items-center justify-center min-h-[128px] border-2 border-dashed border-gray-100 rounded-[2rem] cursor-pointer hover:bg-gray-50 transition-all group overflow-hidden bg-white relative shadow-sm">
+                      {thanksBottomImgUrl ? (
+                        <div className="relative w-full h-full group">
+                          <img src={thanksBottomImgUrl} className="w-full h-full object-cover" />
+                          <div className="absolute inset-0 bg-gray-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[1px]">
+                            <Upload size={20} className="text-white" />
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="text-center p-4">
+                          <Upload className="text-gray-200 mx-auto mb-1 group-hover:text-emerald-500 transition-colors" size={24} />
+                          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">resim yükle</span>
+                        </div>
+                      )}
+                      <input type="file" className="hidden" onChange={(e) => handleImageUpload(e, setThanksBottomImgUrl)} />
+                    </label>
                  </div>
               </div>
             </section>
@@ -306,7 +331,6 @@ const WebFormCreation: React.FC = () => {
             {/* 2. Adımlar */}
             <section className="space-y-10">
               <div className="flex items-center gap-3 px-1"><div className="w-8 h-8 bg-blue-50 text-blue-500 rounded-lg flex items-center justify-center"><SlidersHorizontal size={18} /></div><h4 className="text-lg font-bold text-gray-800">Adımlar</h4></div>
-              
               <div className="space-y-0">
                 <SectionLabel label="Başlık Metni" />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -314,7 +338,6 @@ const WebFormCreation: React.FC = () => {
                   <div className="space-y-2"><LangIndicator lang="EN" /><input type="text" value={stepsTitleEN} onChange={(e) => setStepsTitleEN(e.target.value)} className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-4 text-sm font-semibold outline-none focus:border-blue-300 transition-all shadow-sm" /></div>
                 </div>
               </div>
-
               <div className="space-y-4">
                 <div className="flex items-center justify-between px-1"><label className="text-[11px] font-black text-gray-400 uppercase tracking-widest">Madde Ekle (Max 4, Min 3)</label>{stepsItems.length < 4 && (<button onClick={() => setStepsItems([...stepsItems, {tr: '', en: ''}])} className="text-blue-600 bg-blue-50 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase flex items-center gap-2 hover:bg-blue-100 transition-all"><Plus size={14} /> Adım Ekle</button>)}</div>
                 <div className="grid grid-cols-1 gap-4">{stepsItems.map((item, idx) => (<div key={idx} className="flex gap-4 items-center bg-gray-50/50 p-4 rounded-3xl border border-gray-100 relative group"><div className="w-10 h-10 bg-white border border-gray-100 rounded-2xl flex items-center justify-center text-sm font-black text-blue-600 shadow-sm shrink-0">{idx + 1}</div><div className="flex-1 grid grid-cols-2 gap-4"><input type="text" placeholder="TR Adım" value={item.tr} onChange={(e) => { const n = [...stepsItems]; n[idx].tr = e.target.value; setStepsItems(n); }} className="bg-white border border-gray-100 rounded-xl px-4 py-2 text-xs font-semibold outline-none focus:border-blue-200" /><input type="text" placeholder="EN Adım" value={item.en} onChange={(e) => { const n = [...stepsItems]; n[idx].en = e.target.value; setStepsItems(n); }} className="bg-white border border-gray-100 rounded-xl px-4 py-2 text-xs font-semibold outline-none focus:border-blue-200" /></div>{stepsItems.length > 3 && (<button onClick={() => setStepsItems(stepsItems.filter((_, i) => i !== idx))} className="text-red-300 hover:text-red-500 transition-colors p-2"><Trash2 size={16} /></button>)}</div>))}</div>
@@ -324,7 +347,6 @@ const WebFormCreation: React.FC = () => {
             {/* 3. Mac+ Bilgilendirme */}
             <section className="space-y-10">
               <div className="flex items-center gap-3 px-1"><div className="w-8 h-8 bg-purple-50 text-purple-500 rounded-lg flex items-center justify-center"><Info size={18} /></div><h4 className="text-lg font-bold text-gray-800">Mac+ Bilgilendirme</h4></div>
-              
               <div className="space-y-0">
                 <SectionLabel label="Başlık Metni" />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -332,7 +354,6 @@ const WebFormCreation: React.FC = () => {
                   <div className="space-y-2"><LangIndicator lang="EN" /><input type="text" value={infoTitleEN} onChange={(e) => setInfoTitleEN(e.target.value)} className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-4 text-sm font-semibold outline-none focus:border-purple-300 transition-all shadow-sm" /></div>
                 </div>
               </div>
-
               <div className="space-y-4">
                 <div className="flex items-center justify-between px-1"><label className="text-[11px] font-black text-gray-400 uppercase tracking-widest">Madde Ekle (Max 4, Min 3)</label>{infoItems.length < 4 && (<button onClick={() => setInfoItems([...infoItems, {tr: '', en: ''}])} className="text-purple-600 bg-purple-50 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase flex items-center gap-2 hover:bg-purple-100 transition-all"><Plus size={14} /> Madde Ekle</button>)}</div>
                 <div className="grid grid-cols-1 gap-4">{infoItems.map((item, idx) => (<div key={idx} className="flex gap-4 items-center bg-gray-50/50 p-4 rounded-3xl border border-gray-100 relative group"><div className="w-10 h-10 bg-white border border-gray-100 rounded-2xl flex items-center justify-center text-sm font-black text-purple-600 shadow-sm shrink-0"><CheckCircle2 size={18} /></div><div className="flex-1 grid grid-cols-2 gap-4"><input type="text" placeholder="TR Bilgi" value={item.tr} onChange={(e) => { const n = [...infoItems]; n[idx].tr = e.target.value; setInfoItems(n); }} className="bg-white border border-gray-100 rounded-xl px-4 py-2 text-xs font-semibold outline-none focus:border-purple-200" /><input type="text" placeholder="EN Bilgi" value={item.en} onChange={(e) => { const n = [...infoItems]; n[idx].en = e.target.value; setInfoItems(n); }} className="bg-white border border-gray-100 rounded-xl px-4 py-2 text-xs font-semibold outline-none focus:border-purple-200" /></div>{infoItems.length > 3 && (<button onClick={() => setInfoItems(infoItems.filter((_, i) => i !== idx))} className="text-red-300 hover:text-red-500 transition-colors p-2"><Trash2 size={16} /></button>)}</div>))}</div>
@@ -348,7 +369,6 @@ const WebFormCreation: React.FC = () => {
                      <div className="space-y-2"><LangIndicator lang="EN" /><input type="text" value={downloadBtnEN} onChange={(e) => setDownloadBtnEN(e.target.value)} className="w-full bg-red-50/30 border border-red-100 rounded-2xl px-6 py-5 text-sm font-black text-red-600 tracking-wider text-center outline-none focus:border-red-300 transition-all shadow-sm" /></div>
                   </div>
                </div>
-
                <div className="space-y-10">
                   <div className="flex items-center gap-3 px-1"><div className="w-8 h-8 bg-gray-50 text-gray-400 rounded-lg flex items-center justify-center"><FileText size={18} /></div><h4 className="text-lg font-bold text-gray-800">Form Dip Not</h4></div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -358,7 +378,7 @@ const WebFormCreation: React.FC = () => {
                </div>
             </section>
 
-            {/* QR ve App Linkleri */}
+            {/* 5. QR ve App Linkleri */}
             <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pt-8 border-t border-gray-50">
               <div className="md:col-span-4 space-y-4"><label className="text-[11px] font-black text-gray-400 uppercase tracking-widest px-1">UYGULAMA QR KODU</label><label className="flex flex-col items-center justify-center w-full h-[240px] border-2 border-dashed border-gray-100 rounded-[2.5rem] cursor-pointer hover:bg-emerald-50/30 hover:border-emerald-200 transition-all group overflow-hidden bg-white relative">{successQrUrl ? <img src={successQrUrl} className="w-full h-full object-contain p-8" /> : <div className="text-center space-y-4"><div className="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center mx-auto group-hover:bg-emerald-100 transition-colors"><QrCode className="text-gray-200 group-hover:text-emerald-500" size={32} /></div><p className="text-sm font-bold text-gray-400 uppercase tracking-widest">QR Yükle</p></div>}<input type="file" className="hidden" onChange={(e) => handleImageUpload(e, setSuccessQrUrl)} /></label></div>
               <div className="md:col-span-8 space-y-6 flex flex-col justify-center">
@@ -378,16 +398,13 @@ const WebFormCreation: React.FC = () => {
           <div className="p-10 space-y-12">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-2"><label className="text-[11px] font-black text-gray-400 uppercase tracking-widest px-1">FORM_AREA_NAME</label><div className="relative"><input type="text" value={eventFormAreaName} onChange={(e) => setEventFormAreaName(e.target.value)} className="w-full bg-white border border-gray-100 rounded-[2rem] px-8 py-5 text-sm font-semibold text-gray-700 shadow-sm outline-none focus:border-pink-200" /><Layout className="absolute right-8 top-1/2 -translate-y-1/2 text-gray-200" size={20} /></div></div>
-              {/* Green: Event Category */}
               <div className="space-y-2"><label className="text-[11px] font-black text-gray-400 uppercase tracking-widest px-1">EVENT CATEGORY</label><div className="relative"><input type="text" value={eventCategory} onChange={(e) => setEventCategory(e.target.value)} className="w-full bg-white border border-gray-100 rounded-[2rem] px-8 py-5 text-sm font-semibold text-gray-700 shadow-sm outline-none focus:border-pink-200" /><Activity className="absolute right-8 top-1/2 -translate-y-1/2 text-gray-200" size={20} /></div></div>
             </div>
             <div className="space-y-2"><label className="text-[11px] font-black text-gray-400 uppercase tracking-widest px-1">PAGE_URL</label><div className="relative"><input type="text" value={eventPageUrl} onChange={(e) => setEventPageUrl(e.target.value)} className="w-full bg-white border border-gray-100 rounded-[2rem] px-8 py-5 text-sm font-semibold text-gray-700 shadow-sm outline-none focus:border-pink-200" /><Globe className="absolute right-8 top-1/2 -translate-y-1/2 text-gray-200" size={20} /></div></div>
 
-            {/* Event İsim Tanımları Bölümü - Step View */}
             <div className="space-y-6 pt-6 border-t border-gray-50">
               <SectionLabel label="Event İsim Tanımları" />
               <div className="bg-white p-2 rounded-[2rem] space-y-8">
-                {/* Horizontal Minimal Tab Bar */}
                 <div className="flex items-center w-full border-b border-gray-100 mb-2">
                   {eventSteps.map((step, idx) => (
                     <button
@@ -407,10 +424,8 @@ const WebFormCreation: React.FC = () => {
                   ))}
                 </div>
 
-                {/* Active Step Content */}
                 <div className="px-2 pt-2 animate-in fade-in slide-in-from-bottom-2 duration-300">
                   <div className="space-y-8">
-                    {/* Red Area: Event Name Label */}
                     <div className="space-y-2.5 px-1">
                       <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest px-1">EVENT NAME</label>
                       <div className="relative group">
@@ -424,7 +439,6 @@ const WebFormCreation: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Blue Area: GTM Event ID per Step */}
                     <div className="space-y-2.5 px-1">
                       <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest px-1">GTM EVENT ID</label>
                       <div className="relative group">
@@ -444,7 +458,7 @@ const WebFormCreation: React.FC = () => {
           </div>
         </div>
 
-        <div className="text-center space-y-2 pt-8"><p className="text-[11px] font-bold text-gray-400 font-inter">© 2024 Olympus Web Form Generator • Prototype v2.14 (Detailed Event Tracking Grid)</p></div>
+        <div className="text-center space-y-2 pt-8"><p className="text-[11px] font-bold text-gray-400 font-inter">© 2024 Olympus Web Form Generator • Prototype v2.14</p></div>
       </div>
     </div>
   );
