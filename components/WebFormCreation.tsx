@@ -1,12 +1,12 @@
 import React, { useState, useMemo } from 'react';
-import { LayoutPanelLeft, Plus, Save, ArrowLeft, Image as ImageIcon, Type, Trash2, Upload, CheckCircle2, Activity, Globe, Hash, QrCode, Smartphone, Link as LinkIcon, FileText, Info, MapPin, Building2, ChevronDown, X, Settings2, Layout, SlidersHorizontal, FileEdit, Link2, Languages, Search, AlertCircle, CheckSquare, Square } from 'lucide-react';
+import { LayoutPanelLeft, Plus, Save, ArrowLeft, Image as ImageIcon, Type, Trash2, Upload, CheckCircle2, Activity, Globe, Hash, QrCode, Smartphone, Link as LinkIcon, FileText, Info, MapPin, Building2, ChevronDown, X, Settings2, Layout, SlidersHorizontal, FileEdit, Link2, Languages, Search, AlertCircle, CheckSquare, Square, Info as InfoIcon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 // Mock DB - Kulüp Tipi ve kulüp ilişkisi
 const CLUB_TYPE_DATA: Record<string, string[]> = {
   "MacFit": ["MacFit Cadde", "MacFit Nişantaşı", "MacFit Maltepe", "MacFit Fulya", "MacFit Trump"],
   "Mac/ONE": ["MAC/One Bebek", "MAC/One Caddebostan", "MAC/One Ataşehir", "MAC/One Ortaköy", "MAC/One Nişantaşı"],
-  "MACStudio": ["MACStudio Levent", "MACStudio Akaretler"]
+  "MACStudio": ["MACStudio Levent", "MACStudio Maslak", "MACStudio Akaretler"]
 };
 
 interface BulletPair {
@@ -97,42 +97,26 @@ const WebFormCreation: React.FC = () => {
   const [eventCategory, setEventCategory] = useState('Lead Generation');
   const [eventPageUrl, setEventPageUrl] = useState('https://macone.com.tr/kampanya');
 
-  // Yeni Event İsim Tanımları ve GTM ID'ler
   const [eventStep0, setEventStep0] = useState('form_step0');
-  const [gtmStep0, setGtmStep0] = useState('131');
-  
   const [eventCity, setEventCity] = useState('form_lead_choose_city');
-  const [gtmStepCity, setGtmStepCity] = useState('132');
-
   const [eventStep1, setEventStep1] = useState('form_step1');
-  const [gtmStep1, setGtmStep1] = useState('133');
-
   const [eventDigitalForm, setEventDigitalForm] = useState('digital-membership-form');
-  const [gtmDigitalForm, setGtmDigitalForm] = useState('134');
-
   const [eventStep2, setEventStep2] = useState('form_step2');
-  const [gtmStep2, setGtmStep2] = useState('135');
-
   const [eventStepOtp, setEventStepOtp] = useState('form_step_otp');
-  const [gtmStepOtp, setGtmStepOtp] = useState('136');
-
   const [eventStep3, setEventStep3] = useState('form_step3');
-  const [gtmStep3, setGtmStep3] = useState('137');
-
   const [eventStepSuccess, setEventStepSuccess] = useState('form_step_success');
-  const [gtmStepSuccess, setGtmStepSuccess] = useState('138');
 
   const [activeEventTab, setActiveEventTab] = useState(0);
 
   const eventSteps = [
-    { key: 'form_step0', label: '1. Adım', value: eventStep0, setter: setEventStep0, gtmValue: gtmStep0, gtmSetter: setGtmStep0 },
-    { key: 'form_lead_choose_city', label: '2. Adım', value: eventCity, setter: setEventCity, gtmValue: gtmStepCity, gtmSetter: setGtmStepCity },
-    { key: 'form_step1', label: '3. Adım', value: eventStep1, setter: setEventStep1, gtmValue: gtmStep1, gtmSetter: setGtmStep1 },
-    { key: 'digital-membership-form', label: '4. Adım', value: eventDigitalForm, setter: setEventDigitalForm, gtmValue: gtmDigitalForm, gtmSetter: setGtmDigitalForm },
-    { key: 'form_step2', label: '5. Adım', value: eventStep2, setter: setEventStep2, gtmValue: gtmStep2, gtmSetter: setGtmStep2 },
-    { key: 'form_step_otp', label: '6. Adım', value: eventStepOtp, setter: setEventStepOtp, gtmValue: gtmStepOtp, gtmSetter: setGtmStepOtp },
-    { key: 'form_step3', label: '7. Adım', value: eventStep3, setter: setEventStep3, gtmValue: gtmStep3, gtmSetter: setGtmStep3 },
-    { key: 'form_step_success', label: '8. Adım', value: eventStepSuccess, setter: setEventStepSuccess, gtmValue: gtmStepSuccess, gtmSetter: setGtmStepSuccess },
+    { key: 'form_step0', label: '1. Adım', value: eventStep0, setter: setEventStep0, description: 'İlk ekranda sayfa yüklenince tetikleniyor.' },
+    { key: 'form_lead_choose_city', label: '2. Adım', value: eventCity, setter: setEventCity, description: 'Şehir seçiminde tetikleniyor.' },
+    { key: 'form_step1', label: '3. Adım', value: eventStep1, setter: setEventStep1, description: 'İlk ekranda form submit te tetikleniyor.' },
+    { key: 'digital-membership-form', label: '4. Adım', value: eventDigitalForm, setter: setEventDigitalForm, description: 'Form submit olunca telefon bilgilerini göndermek için tetikleniyor' },
+    { key: 'form_step2', label: '5. Adım', value: eventStep2, setter: setEventStep2, description: 'IYS izni sonrasında tetikleniyor.' },
+    { key: 'form_step_otp', label: '6. Adım', value: eventStepOtp, setter: setEventStepOtp, description: 'OTP popup açılınca tetikleniyor.' },
+    { key: 'form_step3', label: '7. Adım', value: eventStep3, setter: setEventStep3, description: 'Form ekranı submit edilince tetikleniyor.' },
+    { key: 'form_step_success', label: '8. Adım', value: eventStepSuccess, setter: setEventStepSuccess, description: 'OTP doğrulandıktan sonra tetikleniyor.' },
   ];
 
   const allPossibleClubs = useMemo(() => Object.values(CLUB_TYPE_DATA).flat(), []);
@@ -190,8 +174,8 @@ const WebFormCreation: React.FC = () => {
     return false;
   };
 
-  const currentLinkValue = activeAppTab === 'appsflyer' ? appsFlyerLink : activeAppTab === 'ios' ? iosLink : activeAppTab === 'android' ? androidLink : huaweiLink;
-  const isCurrentTabEmpty = !currentLinkValue.trim();
+  // Fix: Definition for isCurrentTabEmpty helper
+  const isCurrentTabEmpty = isLinkEmpty(activeAppTab);
 
   return (
     <div className="max-w-5xl mx-auto pb-20">
@@ -305,7 +289,7 @@ const WebFormCreation: React.FC = () => {
                    </div>
                  </div>
 
-                 {/* Visual Asset Upload Area */}
+                 {/* Visual Asset Container */}
                  <div className="space-y-4 h-full flex flex-col">
                     <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest px-1">görsel varlık</label>
                     <label className="flex-1 flex flex-col items-center justify-center min-h-[128px] border-2 border-dashed border-gray-100 rounded-[2rem] cursor-pointer hover:bg-gray-50 transition-all group overflow-hidden bg-white relative shadow-sm">
@@ -319,7 +303,7 @@ const WebFormCreation: React.FC = () => {
                       ) : (
                         <div className="text-center p-4">
                           <Upload className="text-gray-200 mx-auto mb-1 group-hover:text-emerald-500 transition-colors" size={24} />
-                          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">resim yükle</span>
+                          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest uppercase">resim yükle</span>
                         </div>
                       )}
                       <input type="file" className="hidden" onChange={(e) => handleImageUpload(e, setThanksBottomImgUrl)} />
@@ -426,6 +410,14 @@ const WebFormCreation: React.FC = () => {
 
                 <div className="px-2 pt-2 animate-in fade-in slide-in-from-bottom-2 duration-300">
                   <div className="space-y-8">
+                    {/* Hint / Description Area */}
+                    <div className="border border-sky-400 rounded-xl px-6 py-4 bg-sky-50/30 flex items-start gap-3">
+                       <InfoIcon className="text-sky-500 shrink-0 mt-0.5" size={16} />
+                       <p className="text-xs font-semibold text-sky-800 leading-relaxed">
+                         {eventSteps[activeEventTab].description}
+                       </p>
+                    </div>
+
                     <div className="space-y-2.5 px-1">
                       <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest px-1">EVENT NAME</label>
                       <div className="relative group">
@@ -433,19 +425,6 @@ const WebFormCreation: React.FC = () => {
                           type="text" 
                           value={eventSteps[activeEventTab].value} 
                           onChange={(e) => eventSteps[activeEventTab].setter(e.target.value)} 
-                          className="w-full bg-gray-50/50 border border-gray-100 rounded-[1.5rem] px-8 py-5 text-sm font-bold text-gray-700 outline-none focus:border-pink-200 focus:bg-white transition-all shadow-sm" 
-                        />
-                        <Hash className="absolute right-8 top-1/2 -translate-y-1/2 text-gray-200 group-focus-within:text-pink-200 transition-colors" size={20} />
-                      </div>
-                    </div>
-
-                    <div className="space-y-2.5 px-1">
-                      <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest px-1">GTM EVENT ID</label>
-                      <div className="relative group">
-                        <input 
-                          type="text" 
-                          value={eventSteps[activeEventTab].gtmValue} 
-                          onChange={(e) => eventSteps[activeEventTab].gtmSetter(e.target.value)} 
                           className="w-full bg-gray-50/50 border border-gray-100 rounded-[1.5rem] px-8 py-5 text-sm font-bold text-gray-700 outline-none focus:border-pink-200 focus:bg-white transition-all shadow-sm" 
                         />
                         <Hash className="absolute right-8 top-1/2 -translate-y-1/2 text-gray-200 group-focus-within:text-pink-200 transition-colors" size={20} />
