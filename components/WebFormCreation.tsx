@@ -14,6 +14,13 @@ interface BulletPair {
   en: string;
 }
 
+interface StepItem {
+  tr: string;
+  en: string;
+  descTr: string;
+  descEn: string;
+}
+
 const WebFormCreation: React.FC = () => {
   const navigate = useNavigate();
   
@@ -62,21 +69,21 @@ const WebFormCreation: React.FC = () => {
   const [androidLink, setAndroidLink] = useState('https://play.google.com/store/apps/details?id=com.macfit');
   const [huaweiLink, setHuaweiLink] = useState('');
 
-  // "Teşekkürler Sayfası" State Alanları
-  const [thanksTitleTR, setThanksTitleTR] = useState('Tebrikler, Mert!');
-  const [thanksTitleEN, setThanksTitleEN] = useState('Congratulations, Mert!');
-  const [thanksDescTR, setThanksDescTR] = useState('1 Günlük Giriş Hakkı Kazandın!');
-  const [thanksDescEN, setThanksDescEN] = useState('You Won 1 Day Access!');
+  // "Teşekkürler Sayfası" State Alanları - Güncellendi
+  const [thanksTitleTR, setThanksTitleTR] = useState('1 Günlük Giriş Hakkı Kazandın!');
+  const [thanksTitleEN, setThanksTitleEN] = useState('You Won 1 Day Access!');
+  const [thanksDescTR, setThanksDescTR] = useState('Seçtiğin kulüpte bugün 1 gün boyunca sınırsız spor yapabilirsin.');
+  const [thanksDescEN, setThanksDescEN] = useState('You can enjoy unlimited sports at your chosen club for 1 day today.');
   
   const [showExpiryDate, setShowExpiryDate] = useState(true);
   const [showValidClub, setShowValidClub] = useState(true);
 
   const [stepsTitleTR, setStepsTitleTR] = useState('Kulübe Nasıl Girerim?');
   const [stepsTitleEN, setStepsTitleEN] = useState('How Do I Enter the Club?');
-  const [stepsItems, setStepsItems] = useState<BulletPair[]>([
-    { tr: "MAC+ İndir", en: "Download MAC+" },
-    { tr: "Kulübe Git", en: "Go to Club" },
-    { tr: "Antrenmana Başla", en: "Start Workout" }
+  const [stepsItems, setStepsItems] = useState<StepItem[]>([
+    { tr: "MAC+ İndir", en: "Download MAC+", descTr: "Telefon numaran ile giriş yap", descEn: "Login with your phone number" },
+    { tr: "Kulübe Git", en: "Go to Club", descTr: "MAC+'daki QR ikonuna tıklayarak kapıdaki karekodu okut", descEn: "Scan the QR code at the door via the MAC+ app" },
+    { tr: "Antrenmana Başla", en: "Start Workout", descTr: "Benzersiz fitness deneyiminin tadını çıkar", descEn: "Enjoy the unique fitness experience" }
   ]);
 
   const [infoTitleTR, setInfoTitleTR] = useState('MAC+\'ta Seni Ne Bekliyor?');
@@ -323,8 +330,55 @@ const WebFormCreation: React.FC = () => {
                 </div>
               </div>
               <div className="space-y-4">
-                <div className="flex items-center justify-between px-1"><label className="text-[11px] font-black text-gray-400 uppercase tracking-widest">Madde Ekle (Max 4, Min 3)</label>{stepsItems.length < 4 && (<button onClick={() => setStepsItems([...stepsItems, {tr: '', en: ''}])} className="text-blue-600 bg-blue-50 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase flex items-center gap-2 hover:bg-blue-100 transition-all"><Plus size={14} /> Adım Ekle</button>)}</div>
-                <div className="grid grid-cols-1 gap-4">{stepsItems.map((item, idx) => (<div key={idx} className="flex gap-4 items-center bg-gray-50/50 p-4 rounded-3xl border border-gray-100 relative group"><div className="w-10 h-10 bg-white border border-gray-100 rounded-2xl flex items-center justify-center text-sm font-black text-blue-600 shadow-sm shrink-0">{idx + 1}</div><div className="flex-1 grid grid-cols-2 gap-4"><input type="text" placeholder="TR Adım" value={item.tr} onChange={(e) => { const n = [...stepsItems]; n[idx].tr = e.target.value; setStepsItems(n); }} className="bg-white border border-gray-100 rounded-xl px-4 py-2 text-xs font-semibold outline-none focus:border-blue-200" /><input type="text" placeholder="EN Adım" value={item.en} onChange={(e) => { const n = [...stepsItems]; n[idx].en = e.target.value; setStepsItems(n); }} className="bg-white border border-gray-100 rounded-xl px-4 py-2 text-xs font-semibold outline-none focus:border-blue-200" /></div>{stepsItems.length > 3 && (<button onClick={() => setStepsItems(stepsItems.filter((_, i) => i !== idx))} className="text-red-300 hover:text-red-500 transition-colors p-2"><Trash2 size={16} /></button>)}</div>))}</div>
+                <div className="flex items-center justify-between px-1"><label className="text-[11px] font-black text-gray-400 uppercase tracking-widest">Madde Ekle (Max 4, Min 3)</label>{stepsItems.length < 4 && (<button onClick={() => setStepsItems([...stepsItems, {tr: '', en: '', descTr: '', descEn: ''}])} className="text-blue-600 bg-blue-50 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase flex items-center gap-2 hover:bg-blue-100 transition-all"><Plus size={14} /> Adım Ekle</button>)}</div>
+                <div className="grid grid-cols-1 gap-4">
+                  {stepsItems.map((item, idx) => (
+                    <div key={idx} className="flex gap-4 items-center bg-gray-50/50 p-6 rounded-[2.5rem] border border-gray-100 relative group transition-all hover:border-blue-200">
+                      <div className="w-12 h-12 bg-white border border-gray-100 rounded-[1.25rem] flex items-center justify-center text-sm font-black text-blue-600 shadow-sm shrink-0">
+                        {idx + 1}
+                      </div>
+                      <div className="flex-1 space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
+                          <input 
+                            type="text" 
+                            placeholder="TR Başlık" 
+                            value={item.tr} 
+                            onChange={(e) => { const n = [...stepsItems]; n[idx].tr = e.target.value; setStepsItems(n); }} 
+                            className="bg-white border border-gray-100 rounded-xl px-4 py-2.5 text-xs font-bold text-gray-700 outline-none focus:border-blue-300 transition-all" 
+                          />
+                          <input 
+                            type="text" 
+                            placeholder="EN Başlık" 
+                            value={item.en} 
+                            onChange={(e) => { const n = [...stepsItems]; n[idx].en = e.target.value; setStepsItems(n); }} 
+                            className="bg-white border border-gray-100 rounded-xl px-4 py-2.5 text-xs font-bold text-gray-700 outline-none focus:border-blue-300 transition-all" 
+                          />
+                        </div>
+                        <div className="grid grid-cols-2 gap-4 border-t border-gray-100 pt-4">
+                          <input 
+                            type="text" 
+                            placeholder="TR Alt Açıklama" 
+                            value={item.descTr} 
+                            onChange={(e) => { const n = [...stepsItems]; n[idx].descTr = e.target.value; setStepsItems(n); }} 
+                            className="bg-white border border-gray-100 rounded-xl px-4 py-2 text-[11px] font-semibold text-gray-500 outline-none focus:border-emerald-300 transition-all italic" 
+                          />
+                          <input 
+                            type="text" 
+                            placeholder="EN Alt Açıklama" 
+                            value={item.descEn} 
+                            onChange={(e) => { const n = [...stepsItems]; n[idx].descEn = e.target.value; setStepsItems(n); }} 
+                            className="bg-white border border-gray-100 rounded-xl px-4 py-2 text-[11px] font-semibold text-gray-500 outline-none focus:border-emerald-300 transition-all italic" 
+                          />
+                        </div>
+                      </div>
+                      {stepsItems.length > 3 && (
+                        <button onClick={() => setStepsItems(stepsItems.filter((_, i) => i !== idx))} className="text-red-300 hover:text-red-500 transition-colors p-2 self-start mt-1">
+                          <Trash2 size={18} />
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
             </section>
 
