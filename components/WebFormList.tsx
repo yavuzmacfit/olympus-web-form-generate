@@ -1,16 +1,6 @@
-
 import React, { useState, useMemo } from 'react';
 import { Plus, Search, MoreVertical, Calendar, User, Layout, ExternalLink, Pencil, FileEdit, X, CheckCircle2, ChevronDown, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-// Mock DB - Şehir ve kulüp ilişkisi
-const CITY_DATA: Record<string, string[]> = {
-  "İstanbul": ["MAC/One Bebek", "MAC/One Caddebostan", "MAC/One Ataşehir", "MAC/One Ortaköy", "MAC/One Nişantaşı"],
-  "Ankara": ["MAC/One Panora", "MAC/One Armada", "MAC/One Bilkent"],
-  "İzmir": ["MAC/One Alsancak", "MAC/One Mavişehir", "MAC/One İstinye Park İzmir"],
-  "Bursa": ["MAC/One PodyumPark"],
-  "Antalya": ["MAC/One TerraCity"]
-};
 
 interface FormItem {
   id: number;
@@ -32,49 +22,7 @@ const WebFormList: React.FC = () => {
   ]);
 
   // UI State
-  const [editingForm, setEditingForm] = useState<FormItem | null>(null);
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
-  const [isCityOpen, setIsCityOpen] = useState(false);
-  const [isClubOpen, setIsClubOpen] = useState(false);
-
-  const availableClubs = useMemo(() => {
-    if (!editingForm) return [];
-    let clubs: string[] = [];
-    editingForm.selectedCities.forEach(city => { 
-      if (CITY_DATA[city]) clubs = [...clubs, ...CITY_DATA[city]]; 
-    });
-    return clubs;
-  }, [editingForm?.selectedCities]);
-
-  const toggleCity = (city: string) => {
-    if (!editingForm) return;
-    const isSelected = editingForm.selectedCities.includes(city);
-    let newCities = isSelected 
-      ? editingForm.selectedCities.filter(c => c !== city)
-      : [...editingForm.selectedCities, city];
-    
-    let newClubs = editingForm.selectedClubs;
-    if (isSelected) {
-      const cityClubs = CITY_DATA[city] || [];
-      newClubs = newClubs.filter(club => !cityClubs.includes(club));
-    }
-    setEditingForm({ ...editingForm, selectedCities: newCities, selectedClubs: newClubs });
-  };
-
-  const toggleClub = (club: string) => {
-    if (!editingForm) return;
-    const isSelected = editingForm.selectedClubs.includes(club);
-    const newClubs = isSelected
-      ? editingForm.selectedClubs.filter(c => c !== club)
-      : [...editingForm.selectedClubs, club];
-    setEditingForm({ ...editingForm, selectedClubs: newClubs });
-  };
-
-  const handleSave = () => {
-    if (!editingForm) return;
-    setForms(prev => prev.map(f => f.id === editingForm.id ? editingForm : f));
-    setEditingForm(null);
-  };
 
   const handleDelete = (id: number) => {
     setForms(prev => prev.filter(f => f.id !== id));
@@ -197,15 +145,13 @@ const WebFormList: React.FC = () => {
                 </td>
                 <td className="px-8 py-6 text-right relative">
                   <div className="flex items-center justify-end gap-2">
-                    {form.status === 'Aktif' && (
-                      <button 
-                        onClick={() => setEditingForm(form)}
-                        title="Düzenle" 
-                        className="p-2 hover:bg-white rounded-xl text-gray-400 hover:text-blue-500 transition-all shadow-sm"
-                      >
-                        <Pencil size={18} />
-                      </button>
-                    )}
+                    <Link 
+                      to={form.status === 'Aktif' ? `/web-formlar/duzenle/${form.id}` : `/web-formlar/taslak-duzenle/${form.id}`}
+                      title="Düzenle" 
+                      className="p-2 hover:bg-white rounded-xl text-gray-400 hover:text-blue-500 transition-all shadow-sm"
+                    >
+                      <Pencil size={18} />
+                    </Link>
                     
                     <div className="relative">
                       <button 
@@ -220,7 +166,7 @@ const WebFormList: React.FC = () => {
                         <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-100 rounded-2xl shadow-2xl shadow-gray-200/50 z-[90] overflow-hidden py-2 animate-in fade-in zoom-in-95 duration-150 origin-top-right">
                           {form.status === 'Taslak' ? (
                             <>
-                              <Link to="/web-formlar/yeni" className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors">
+                              <Link to={`/web-formlar/taslak-duzenle/${form.id}`} className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors">
                                 <FileEdit size={16} /> TASLAĞI DÜZENLE
                               </Link>
                               <button 
@@ -231,9 +177,14 @@ const WebFormList: React.FC = () => {
                               </button>
                             </>
                           ) : (
-                            <button className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-emerald-50 hover:text-emerald-600 transition-colors">
-                              <ExternalLink size={16} /> FORMA GİT
-                            </button>
+                            <>
+                              <Link to={`/web-formlar/duzenle/${form.id}`} className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors md:hidden">
+                                <Pencil size={16} /> DÜZENLE
+                              </Link>
+                              <button className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-gray-600 hover:bg-emerald-50 hover:text-emerald-600 transition-colors">
+                                <ExternalLink size={16} /> FORMA GİT
+                              </button>
+                            </>
                           )}
                         </div>
                       )}
@@ -245,107 +196,6 @@ const WebFormList: React.FC = () => {
           </tbody>
         </table>
       </div>
-
-      {/* Hızlı Düzenleme Modal (Pop-up) */}
-      {editingForm && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setEditingForm(null)}></div>
-          
-          <div className="relative bg-white w-full max-w-xl rounded-[2.5rem] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
-            {/* Modal Header */}
-            <div className="p-8 border-b border-gray-50 flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center">
-                  <Pencil size={24} />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 tracking-tight">Hızlı Düzenle</h3>
-                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-0.5">ŞEHİR VE KULÜP YÖNETİMİ</p>
-                </div>
-              </div>
-              <button onClick={() => setEditingForm(null)} className="p-2 hover:bg-gray-100 rounded-full text-gray-400 transition-colors">
-                <X size={24} />
-              </button>
-            </div>
-
-            {/* Modal Content */}
-            <div className="p-10 space-y-8">
-              <div className="space-y-2">
-                <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest px-1">FORM ADI</label>
-                <div className="bg-gray-50 px-6 py-4 rounded-2xl text-sm font-bold text-gray-700 border border-gray-100">
-                  {editingForm.name}
-                </div>
-              </div>
-
-              {/* Şehir Seçimi */}
-              <div className="space-y-3">
-                <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest px-1">ŞEHİR SEÇİMİ</label>
-                <div className="relative">
-                  <div 
-                    onClick={() => { setIsCityOpen(!isCityOpen); setIsClubOpen(false); }} 
-                    className="min-h-[56px] w-full bg-white border border-gray-100 rounded-[1.5rem] px-6 py-2 flex flex-wrap gap-2 items-center cursor-pointer shadow-sm hover:border-blue-300 transition-all"
-                  >
-                    {editingForm.selectedCities.length === 0 ? <span className="text-xs text-gray-300">Şehir Seçin...</span> : 
-                      editingForm.selectedCities.map(city => (
-                        <span key={city} className="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-[10px] font-black flex items-center gap-1">
-                          {city} <X size={10} onClick={(e) => { e.stopPropagation(); toggleCity(city); }} />
-                        </span>
-                      ))
-                    }
-                    <ChevronDown size={16} className="ml-auto text-gray-300" />
-                  </div>
-                  {isCityOpen && (
-                    <div className="absolute z-[110] top-full left-0 w-full mt-2 bg-white border border-gray-100 shadow-2xl rounded-2xl overflow-hidden p-2">
-                      {Object.keys(CITY_DATA).map(city => (
-                        <div key={city} onClick={() => toggleCity(city)} className={`flex items-center justify-between p-3 rounded-xl cursor-pointer ${editingForm.selectedCities.includes(city) ? 'bg-blue-50 text-blue-600' : 'hover:bg-gray-50'}`}>
-                          <span className="text-sm font-semibold">{city}</span>
-                          {editingForm.selectedCities.includes(city) && <CheckCircle2 size={16} />}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Kulüp Seçimi */}
-              <div className={`space-y-3 ${editingForm.selectedCities.length === 0 ? 'opacity-40 pointer-events-none' : ''}`}>
-                <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest px-1">KULÜP SEÇİMİ</label>
-                <div className="relative">
-                  <div 
-                    onClick={() => { setIsClubOpen(!isClubOpen); setIsCityOpen(false); }} 
-                    className="min-h-[56px] w-full bg-white border border-gray-100 rounded-[1.5rem] px-6 py-2 flex flex-wrap gap-2 items-center cursor-pointer shadow-sm hover:border-orange-300 transition-all"
-                  >
-                    {editingForm.selectedClubs.length === 0 ? <span className="text-xs text-gray-300">Kulüp Seçin...</span> : 
-                      editingForm.selectedClubs.map(club => (
-                        <span key={club} className="bg-orange-50 text-orange-600 px-3 py-1 rounded-full text-[10px] font-black flex items-center gap-1">
-                          {club} <X size={10} onClick={(e) => { e.stopPropagation(); toggleClub(club); }} />
-                        </span>
-                      ))
-                    }
-                    <ChevronDown size={16} className="ml-auto text-gray-300" />
-                  </div>
-                  {isClubOpen && (
-                    <div className="absolute z-[110] top-full left-0 w-full mt-2 bg-white border border-gray-100 shadow-2xl rounded-2xl overflow-hidden p-2 max-h-48 overflow-y-auto">
-                      {availableClubs.map(club => (
-                        <div key={club} onClick={() => toggleClub(club)} className={`flex items-center justify-between p-3 rounded-xl cursor-pointer ${editingForm.selectedClubs.includes(club) ? 'bg-orange-50 text-orange-600' : 'hover:bg-gray-50'}`}>
-                          <span className="text-sm font-semibold">{club}</span>
-                          {editingForm.selectedClubs.includes(club) && <CheckCircle2 size={16} />}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* Modal Footer */}
-            <div className="p-8 bg-gray-50 border-t border-gray-100 flex items-center justify-end gap-4">
-              <button onClick={() => setEditingForm(null)} className="px-6 py-3 rounded-2xl text-sm font-bold text-gray-400 hover:text-gray-600 transition-colors">İPTAL</button>
-              <button onClick={handleSave} className="px-10 py-3 bg-blue-600 text-white rounded-2xl text-sm font-bold shadow-xl shadow-blue-100 hover:bg-blue-700 transition-all">DEĞİŞİKLİKLERİ KAYDET</button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

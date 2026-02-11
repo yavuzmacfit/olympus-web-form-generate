@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
@@ -7,6 +6,8 @@ import Dashboard from './components/Dashboard';
 import IdeaAssistant from './components/IdeaAssistant';
 import WebFormList from './components/WebFormList';
 import WebFormCreation from './components/WebFormCreation';
+import WebFormEdit from './components/WebFormEdit';
+import WebFormDraftEdit from './components/WebFormDraftEdit';
 import { Menu, X } from 'lucide-react';
 
 const App: React.FC = () => {
@@ -31,6 +32,8 @@ const App: React.FC = () => {
               <Route path="/" element={<Dashboard />} />
               <Route path="/web-formlar" element={<WebFormList />} />
               <Route path="/web-formlar/yeni" element={<WebFormCreation />} />
+              <Route path="/web-formlar/duzenle/:id" element={<WebFormEdit />} />
+              <Route path="/web-formlar/taslak-duzenle/:id" element={<WebFormDraftEdit />} />
             </Routes>
           </main>
         </div>
