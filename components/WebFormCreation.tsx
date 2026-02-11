@@ -104,6 +104,7 @@ const WebFormCreation: React.FC = () => {
   const [eventCategory, setEventCategory] = useState('Lead Generation');
   const [eventPageUrl, setEventPageUrl] = useState('https://macone.com.tr/kampanya');
 
+  const [eventError, setEventError] = useState('error_event');
   const [eventStep0, setEventStep0] = useState('form_step0');
   const [eventCity, setEventCity] = useState('form_lead_choose_city');
   const [eventStep1, setEventStep1] = useState('form_step1');
@@ -116,14 +117,15 @@ const WebFormCreation: React.FC = () => {
   const [activeEventTab, setActiveEventTab] = useState(0);
 
   const eventSteps = [
-    { key: 'form_step0', label: '1. Adım', value: eventStep0, setter: setEventStep0, description: 'İlk ekranda sayfa yüklenince tetikleniyor.' },
-    { key: 'form_lead_choose_city', label: '2. Adım', value: eventCity, setter: setEventCity, description: 'Şehir seçiminde tetikleniyor.' },
-    { key: 'form_step1', label: '3. Adım', value: eventStep1, setter: setEventStep1, description: 'İlk ekranda form submit te tetikleniyor.' },
-    { key: 'digital-membership-form', label: '4. Adım', value: eventDigitalForm, setter: setEventDigitalForm, description: 'Form submit olunca telefon bilgilerini göndermek için tetikleniyor' },
-    { key: 'form_step2', label: '5. Adım', value: eventStep2, setter: setEventStep2, description: 'IYS izni sonrasında tetikleniyor.' },
-    { key: 'form_step_otp', label: '6. Adım', value: eventStepOtp, setter: setEventStepOtp, description: 'OTP popup açılınca tetikleniyor.' },
-    { key: 'form_step3', label: '7. Adım', value: eventStep3, setter: setEventStep3, description: 'Form ekranı submit edilince tetikleniyor.' },
-    { key: 'form_step_success', label: '8. Adım', value: eventStepSuccess, setter: setEventStepSuccess, description: 'OTP doğrulandıktan sonra tetikleniyor.' },
+    { key: 'error_event', label: '1. Adım', value: eventError, setter: setEventError, description: 'Sayfa içerisinde alınan hata sırasında tetiklenir' },
+    { key: 'form_step0', label: '2. Adım', value: eventStep0, setter: setEventStep0, description: 'İlk ekranda sayfa yüklenince tetikleniyor.' },
+    { key: 'form_lead_choose_city', label: '3. Adım', value: eventCity, setter: setEventCity, description: 'Şehir seçiminde tetikleniyor.' },
+    { key: 'form_step1', label: '4. Adım', value: eventStep1, setter: setEventStep1, description: 'İlk ekranda form submit te tetikleniyor.' },
+    { key: 'digital-membership-form', label: '5. Adım', value: eventDigitalForm, setter: setEventDigitalForm, description: 'Form submit olunca telefon bilgilerini göndermek için tetikleniyor' },
+    { key: 'form_step2', label: '6. Adım', value: eventStep2, setter: setEventStep2, description: 'IYS izni sonrasında tetikleniyor.' },
+    { key: 'form_step_otp', label: '7. Adım', value: eventStepOtp, setter: setEventStepOtp, description: 'OTP popup açılınca tetikleniyor.' },
+    { key: 'form_step3', label: '8. Adım', value: eventStep3, setter: setEventStep3, description: 'Form ekranı submit edilince tetikleniyor.' },
+    { key: 'form_step_success', label: '9. Adım', value: eventStepSuccess, setter: setEventStepSuccess, description: 'OTP doğrulandıktan sonra tetikleniyor.' },
   ];
 
   const allPossibleClubs = useMemo(() => Object.values(CLUB_TYPE_DATA).flat(), []);
@@ -181,7 +183,6 @@ const WebFormCreation: React.FC = () => {
     return false;
   };
 
-  // Fix: Definition for isCurrentTabEmpty helper
   const isCurrentTabEmpty = isLinkEmpty(activeAppTab);
 
   return (
